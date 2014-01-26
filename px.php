@@ -256,9 +256,13 @@
 		*/
 		static function run_file($file) {
 			if (! file_exists($file)) {
-				error_log('Could not find file "'.$filename.'"');
+				error_log('Could not find file "'.$file.'"');
 			}
-			$html = file_get_contents($file);
+
+			ob_start();
+			include($file);
+			$html = ob_get_clean();
+
 			$html = self::run($html);
 			return $html;
 		}
